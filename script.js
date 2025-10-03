@@ -86,15 +86,6 @@ if(avg > 0){
     productsGrid.appendChild(card);
   });
 }
-const gradients = [
-  "linear-gradient(135deg,#d9f7be 0%,#a7f3d0 100%)",
-  "linear-gradient(135deg,#fff7bc 0%,#ffe082 100%)",
-  "linear-gradient(135deg,#fcd5ce 0%,#f8b4b4 100%)",
-  "linear-gradient(135deg,#bae6fd 0%,#7dd3fc 100%)",
-];
-productsGrid.querySelectorAll(".product-card").forEach((card,i)=>{
-  card.style.background = gradients[i % gradients.length];
-});
 
 // ---------- Filter Category ----------
 function filterCategory(cat){
@@ -309,6 +300,7 @@ confirmOrder.addEventListener("click",()=>{
 // ---------- Init ----------
 renderProducts(products);
 updateCartUI();
+
 
 
 
