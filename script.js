@@ -24,14 +24,34 @@ const products = [
 
 // -------- Containers --------
 const productsGrid = document.getElementById("productsGrid");
+const categoriesList = document.getElementById("categoriesList");
 
-// -------- Reviews --------
+// -------- Reviews & Cart --------
 let reviews = JSON.parse(localStorage.getItem("reviews")) || {};
-
-// -------- Cart --------
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// -------- Functions --------
+// -------- Categories --------
+const categories = [...new Set(products.map(p=>p.category))];
+categories.forEach(cat=>{
+  const li = document.createElement("li");
+  li.textContent = cat;
+  li.style.cursor = "pointer";
+  li.addEventListener("click", ()=>{
+    const filtered = products.filter(p=>p.category===cat);
+    renderProducts(filtered);
+  });
+  categoriesList.appendChild(li);
+});
+
+// "All" option
+const allLi = document.createElement("li");
+allLi.textContent = "All";
+allLi.style.cursor = "pointer";
+allLi.style.fontWeight = "700";
+allLi.addEventListener("click", ()=> renderProducts(products));
+categoriesList.prepend(allLi);
+
+// -------- Render Products --------
 function renderProducts(list){
   productsGrid.innerHTML="";
   const gradients = [
@@ -62,8 +82,9 @@ function renderProducts(list){
   });
 }
 
-// Render products initially
+// -------- Initial render --------
 renderProducts(products);
+
 
 
 
