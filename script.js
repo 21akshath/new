@@ -9,78 +9,106 @@ const products = [
   {id:8, name:"Yoga Mat", category:"Sports", price:799, img:"https://images.unsplash.com/photo-1594737625785-6ad0e9d6bb76?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Eco-friendly yoga mat."},
   {id:9, name:"Perfume", category:"Beauty", price:2299, img:"https://images.unsplash.com/photo-1600180759430-3c70f503d0e7?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Fragrant perfume."},
   {id:10, name:"Toy Car", category:"Toys", price:699, img:"https://images.unsplash.com/photo-1583162906563-2b873fc98e3d?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Fun toy car."},
-  // New Products
   {id:11, name:"Sunglasses", category:"Accessories", price:1599, img:"https://images.unsplash.com/photo-1504198453319-5ce911bafcde?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Stylish UV protection sunglasses."},
   {id:12, name:"Backpack", category:"Bags", price:2199, img:"https://images.unsplash.com/photo-1589571894960-20bbe2828f3e?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Durable travel backpack."}
 ];
 
-// -------- Containers --------
 const productsGrid = document.getElementById("productsGrid");
 const categoriesList = document.getElementById("categoriesList");
-
-// -------- Reviews & Cart --------
 let reviews = JSON.parse(localStorage.getItem("reviews")) || {};
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// -------- Categories --------
+// Populate categories
 const categories = [...new Set(products.map(p=>p.category))];
 categories.forEach(cat=>{
   const li = document.createElement("li");
   li.textContent = cat;
   li.style.cursor = "pointer";
-  li.addEventListener("click", ()=>{
-    const filtered = products.filter(p=>p.category===cat);
-    renderProducts(filtered);
-  });
+  li.addEventListener("click", ()=>renderProducts(products.filter(p=>p.category===cat)));
   categoriesList.appendChild(li);
 });
-
-// "All" option
 const allLi = document.createElement("li");
 allLi.textContent = "All";
-allLi.style.cursor = "pointer";
-allLi.style.fontWeight = "700";
-allLi.addEventListener("click", ()=> renderProducts(products));
+allLi.style.cursor="pointer";
+allLi.style.fontWeight="700";
+allLi.addEventListener("click", ()=>renderProducts(products));
 categoriesList.prepend(allLi);
 
-// -------- Render Products --------
+// Render products
 function renderProducts(list){
   productsGrid.innerHTML="";
-  const gradients = [
-    "linear-gradient(135deg,#d9f7be 0%,#a7f3d0 100%)",
-    "linear-gradient(135deg,#fff7bc 0%,#ffe082 100%)",
-    "linear-gradient(135deg,#fcd5ce 0%,#f8b4b4 100%)",
-    "linear-gradient(135deg,#bae6fd 0%,#7dd3fc 100%)",
-  ];
-
+  const gradients = ["#d9f7be","#fff7bc","#fcd5ce","#bae6fd"];
   list.forEach((p,i)=>{
     const card = document.createElement("div");
     card.classList.add("product-card");
-    card.style.background = gradients[i % gradients.length];
-    card.innerHTML = `
-      <img src="${p.img}" alt="${p.name}" class="product-image"/>
+    card.style.background = gradients[i%gradients.length];
+    card.innerHTML=`
+      <img src="${p.img}" alt="${p.name}" class="product-image">
       <div class="card-body">
-        <h3 class="product-title">${p.name}</h3>
-        <p class="product-category">${p.category}</p>
-        <div class="price-row">
-          <span class="price-value">₹${p.price}</span>
-          <button class="btn btn-primary add-to-cart">Add</button>
+        <h3>${p.name}</h3>
+        <p>${p.category}</p>
+        <div class="price-row"><span>₹${p.price}</span></div>
+        <div class="card-actions">
+          <button class="btn btn-primary add-to-cart">Add to Cart</button>
+          <button class="btn btn-secondary view-details">View Details</button>
         </div>
-        <div class="rating" id="rating-${p.id}"></div>
       </div>
     `;
     productsGrid.appendChild(card);
-    card.querySelector(".add-to-cart").addEventListener("click",()=>addToCart(p.id));
+
+    card.querySelector(".add-to-cart").addEventListener("click", ()=>addToCart(p.id));
+    card.querySelector(".view-details").addEventListener("click", ()=>openDetailsModal(p.id));
   });
 }
-
-// -------- Initial render --------
 renderProducts(products);
 
+// --- Details Modal Logic ---
+function openDetailsModal(id){
+  const product = products.find(p=>p.id===id);
+  document.getElementById("detailsTitle").textContent = product.name;
+  document.getElementById("detailsImage").src = product.img;
+  document.getElementById("detailsDesc").textContent = product.desc;
+  document.getElementById("detailsPrice").textContent = `₹${product.price}`;
 
+  const reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML="";
+  const productReviews = reviews[id] || [];
+  productReviews.forEach((rev,i)=>{
+    const div = document.createElement("div");
+    div.innerHTML=`<b>${rev.name}</b> (${rev.rating}⭐)<p>${rev.text}</p>
+      <button class="btn btn-secondary delete-review" data-index="${i}">Delete</button>`;
+    reviewList.appendChild(div);
+    div.querySelector(".delete-review").addEventListener("click", ()=>{
+      productReviews.splice(i,1);
+      reviews[id]=productReviews;
+      localStorage.setItem("reviews",JSON.stringify(reviews));
+      openDetailsModal(id);
+    });
+  });
 
+  document.getElementById("addReviewBtn").onclick = ()=>{
+    const name=document.getElementById("reviewerName").value.trim();
+    const rating=parseInt(document.getElementById("reviewRating").value);
+    const text=document.getElementById("reviewText").value.trim();
+    if(name && rating && text){
+      if(!reviews[id]) reviews[id]=[];
+      reviews[id].push({name,rating,text});
+      localStorage.setItem("reviews",JSON.stringify(reviews));
+      document.getElementById("reviewerName").value="";
+      document.getElementById("reviewRating").value="";
+      document.getElementById("reviewText").value="";
+      openDetailsModal(id);
+    }else alert("Fill all fields to submit review.");
+  };
 
+  document.getElementById("detailsModal").style.display="flex";
+}
+document.getElementById("closeDetails").onclick=()=>document.getElementById("detailsModal").style.display="none";
 
-
-
-
+// --- Add to Cart (basic) ---
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  cart.push(product);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  document.getElementById("cartBtn").textContent=`Cart (${cart.length})`;
+}
