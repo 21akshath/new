@@ -7,9 +7,9 @@ const products = [
   {id:6,name:"Sunglasses",category:"Accessories",price:799,img:"https://images.unsplash.com/photo-1512069772994-66b5e9d2f4e8?auto=format&fit=crop&w=300&q=80",desc:"Stylish UV-protection sunglasses."},
   {id:7,name:"Smartphone",category:"Electronics",price:29999,img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80",desc:"Latest smartphone with great features."},
   {id:8,name:"Wrist Watch",category:"Accessories",price:3499,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=300&q=80",desc:"Elegant wrist watch for all occasions."},
-  {id:9,name:"Jeans",category:"Clothing",price:1499,img:"https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=300&q=80",desc:"Comfortable blue jeans."},
+  {id:9,name:"Jeans",category:"Clothing",price:1499,img:"https://images.unsplash.com/photo-1589987608885-61d845ceab05?auto=format&fit=crop&w=300&q=80",desc:"Comfortable blue jeans."},
   {id:10,name:"Laptop",category:"Electronics",price:49999,img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=300&q=80",desc:"High-performance laptop for work and gaming."},
-  {id:11,name:"Backpack",category:"Accessories",price:1199,img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80",desc:"Spacious backpack for travel and college."},
+  {id:11,name:"Backpack",category:"Accessories",price:1199,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80",desc:"Spacious backpack for travel and college."},
   {id:12,name:"Headphones",category:"Electronics",price:1999,img:"https://images.unsplash.com/photo-1590608897129-79c2bfa4e5b4?auto=format&fit=crop&w=300&q=80",desc:"Wireless headphones with noise cancellation."}
 ];
 
@@ -187,4 +187,5 @@ document.getElementById("confirmOrder").onclick=()=>{
   cartModal.style.display="none";
   cartBtn.textContent="Cart (0)";
 };
+
 
