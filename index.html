@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GreenCart — Product Showcase</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <h1>GreenCart</h1>
+      <p class="tag">Fresh picks. Eco-friendly shopping.</p>
+    </div>
+    <div class="controls">
+      <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
+      <button id="darkModeToggle" class="toggle-btn">🌙</button>
+      <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="sidebar">
+      <h2>Categories</h2>
+      <ul id="categoryList" class="categories"></ul>
+      <div class="promo">
+        <h3>Quick Info</h3>
+        <p>Prices in Indian Rupees (₹). Free delivery over ₹2,000.</p>
+      </div>
+    </aside>
+
+    <section class="catalog">
+      <div class="toolbar">
+        <div id="activeCategory" class="active-category">All Products</div>
+        <div id="sortWrap" class="sort-wrap">
+          <label for="sortSelect">Sort:</label>
+          <select id="sortSelect">
+            <option value="default">Featured</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+            <option value="alpha">Name A → Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="productsGrid" class="products-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="cartTitle">
+      <header class="cart-header">
+        <h2 id="cartTitle">Your Cart</h2>
+        <button id="closeCart" class="close-btn" aria-label="Close cart">✕</button>
+      </header>
+      <div id="cartContents" class="cart-contents"></div>
+      <footer class="cart-footer">
+        <div class="cart-summary">
+          <div>Subtotal:</div>
+          <div id="cartSubtotal">₹0</div>
+        </div>
+        <div class="cart-actions">
+          <button id="clearCart" class="btn btn-outline">Clear</button>
+          <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- View Details Modal -->
+  <div id="detailsModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="detailsTitle">
+      <header class="cart-header">
+        <h2 id="detailsTitle">Product Details</h2>
+        <button id="closeDetails" class="close-btn" aria-label="Close details">✕</button>
+      </header>
+      <div id="detailsContents" class="cart-contents"></div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="checkoutTitle">
+      <header class="cart-header">
+        <h2 id="checkoutTitle">Checkout</h2>
+        <button id="closeCheckout" class="close-btn" aria-label="Close checkout">✕</button>
+      </header>
+      <div id="checkoutContents" class="cart-contents"></div>
+      <footer class="cart-footer">
+        <button id="confirmOrder" class="btn btn-primary">Confirm Order</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Product Template -->
+  <template id="productCardTemplate">
+    <article class="product-card">
+      <img class="product-image" alt="Product image" />
+      <div class="card-body">
+        <h3 class="product-title"></h3>
+        <p class="product-category"></p>
+        <div class="price-row">
+          <div class="price">₹<span class="price-value"></span></div>
+          <div class="btn-group">
+            <button class="add-cart btn-small">Add to Cart</button>
+            <button class="view-details btn-small">View Details</button>
+          </div>
+        </div>
+        <div class="rating" aria-label="Average Rating"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
