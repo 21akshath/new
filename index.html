@@ -1,117 +1,90 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GreenCart — Product Showcase</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>GreenCart</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Header -->
   <header class="site-header">
     <div class="brand">
       <h1>GreenCart</h1>
-      <p class="tag">Fresh picks. Eco-friendly shopping.</p>
+      <p class="tag">Your online store</p>
     </div>
     <div class="controls">
-      <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
-      <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
+      <input type="search" id="searchInput" placeholder="Search products">
+      <button id="cartBtn" class="btn btn-primary">Cart (0)</button>
     </div>
   </header>
 
-  <main class="main">
+  <!-- Main content -->
+  <div class="main">
+    <!-- Categories sidebar -->
     <aside class="sidebar">
-      <h2>Categories</h2>
-      <ul id="categoryList" class="categories"></ul>
-      <div class="promo">
-        <h3>Quick Info</h3>
-        <p>Prices in Indian Rupees (₹). Free delivery over ₹2,000.</p>
-      </div>
+      <h3>Categories</h3>
+      <ul class="categories" id="categoriesList"></ul>
     </aside>
 
-    <section class="catalog">
-      <div class="toolbar">
-        <div id="activeCategory" class="active-category">All Products</div>
-        <div id="sortWrap" class="sort-wrap">
-          <label for="sortSelect">Sort:</label>
-          <select id="sortSelect">
-            <option value="default">Featured</option>
-            <option value="low">Price: Low → High</option>
-            <option value="high">Price: High → Low</option>
-            <option value="alpha">Name A → Z</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="productsGrid" class="products-grid" aria-live="polite"></div>
-    </section>
-  </main>
-
-  <!-- Cart Modal -->
-  <div id="cartModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel" role="dialog" aria-labelledby="cartTitle">
-      <header class="cart-header">
-        <h2 id="cartTitle">Your Cart</h2>
-        <button id="closeCart" class="close-btn" aria-label="Close cart">✕</button>
-      </header>
-      <div id="cartContents" class="cart-contents"></div>
-      <footer class="cart-footer">
-        <div class="cart-summary">
-          <div>Subtotal:</div>
-          <div id="cartSubtotal">₹0</div>
-        </div>
-        <div class="cart-actions">
-          <button id="clearCart" class="btn btn-outline">Clear</button>
-          <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
-        </div>
-      </footer>
+    <!-- Products -->
+    <div class="catalog">
+      <div class="products-grid" id="productsGrid"></div>
     </div>
   </div>
 
-  <!-- View Details Modal -->
-  <div id="detailsModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel" role="dialog" aria-labelledby="detailsTitle">
-      <header class="cart-header">
-        <h2 id="detailsTitle">Product Details</h2>
-        <button id="closeDetails" class="close-btn" aria-label="Close details">✕</button>
-      </header>
-      <div id="detailsContents" class="cart-contents"></div>
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-panel">
+      <div class="cart-header">
+        <h3>Cart</h3>
+        <button class="close-btn" id="closeCart">&times;</button>
+      </div>
+      <div class="cart-contents" id="cartContents"></div>
+      <div class="cart-footer">
+        <div class="cart-summary" id="cartSummary"></div>
+        <div class="cart-actions">
+          <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details & Reviews Modal -->
+  <div class="cart-modal" id="detailsModal">
+    <div class="cart-panel">
+      <div class="cart-header">
+        <h3 id="detailsTitle">Product</h3>
+        <button class="close-btn" id="closeDetails">&times;</button>
+      </div>
+      <img id="detailsImage" src="" alt="" style="width:100%;margin-bottom:1rem;border-radius:12px;">
+      <p id="detailsDesc"></p>
+      <div id="detailsPrice" style="font-weight:700;margin-bottom:0.5rem;"></div>
+      <button class="btn btn-primary" id="detailsAddCart">Add to Cart</button>
+
+      <h4 style="margin-top:1rem;">Reviews</h4>
+      <div id="reviewList"></div>
+
+      <h4>Add Review</h4>
+      <input id="reviewerName" placeholder="Your Name">
+      <input id="reviewRating" type="number" min="1" max="5" placeholder="Rating (1-5)">
+      <textarea id="reviewText" placeholder="Your review"></textarea>
+      <button class="btn btn-primary" id="addReviewBtn">Submit Review</button>
     </div>
   </div>
 
   <!-- Checkout Modal -->
-  <div id="checkoutModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel" role="dialog" aria-labelledby="checkoutTitle">
-      <header class="cart-header">
-        <h2 id="checkoutTitle">Checkout</h2>
-        <button id="closeCheckout" class="close-btn" aria-label="Close checkout">✕</button>
-      </header>
-      <div id="checkoutContents" class="cart-contents"></div>
-      <footer class="cart-footer">
-        <button id="confirmOrder" class="btn btn-primary">Confirm Order</button>
-      </footer>
+  <div class="cart-modal" id="checkoutModal">
+    <div class="cart-panel">
+      <div class="cart-header">
+        <h3>Checkout</h3>
+        <button class="close-btn" id="closeCheckout">&times;</button>
+      </div>
+      <div class="checkout-contents" id="checkoutContents"></div>
+      <button class="btn btn-primary" id="confirmOrder">Confirm Order</button>
     </div>
   </div>
 
-  <!-- Product Template -->
-  <template id="productCardTemplate">
-    <article class="product-card">
-      <img class="product-image" alt="Product image" />
-      <div class="card-body">
-        <h3 class="product-title"></h3>
-        <p class="product-category"></p>
-        <div class="price-row">
-          <div class="price">₹<span class="price-value"></span></div>
-          <div class="btn-group">
-            <button class="add-cart btn-small">Add to Cart</button>
-            <button class="view-details btn-small">View Details</button>
-          </div>
-        </div>
-        <div class="rating" aria-label="Average Rating"></div>
-      </div>
-    </article>
-  </template>
-
   <script src="script.js"></script>
 </body>
-
 </html>
