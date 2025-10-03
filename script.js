@@ -77,8 +77,12 @@ function renderProducts(list){
     card.querySelector(".view-details").addEventListener("click", ()=>openDetails(p.id));
     // Average rating
     const ratingDiv = card.querySelector(".rating");
-    const avg = getAverageRating(p.id);
-    ratingDiv.innerHTML = "⭐".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
+   const avg = getAverageRating(p.id);
+if(avg > 0){
+  ratingDiv.innerHTML = "⭐".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
+} else {
+  ratingDiv.innerHTML = ""; // No stars if no reviews
+}
     productsGrid.appendChild(card);
   });
 }
@@ -223,14 +227,22 @@ function renderReviewList(pid){
     reviewList.textContent="No reviews yet.";
     return;
   }
-  reviews[pid].forEach(r=>{
-    const div=document.createElement("div");
-    div.style.borderBottom="1px solid #ddd";
-    div.style.padding="0.3rem 0";
-    div.innerHTML=`<strong>${r.name}</strong> ⭐${"⭐".repeat(r.rating)}<br>${r.text}`;
-    reviewList.appendChild(div);
+  reviews[pid].forEach((r,index)=>{
+  const div=document.createElement("div");
+  div.style.borderBottom="1px solid #ddd";
+  div.style.padding="0.3rem 0";
+  div.innerHTML=`
+    <strong>${r.name}</strong> ⭐${"⭐".repeat(r.rating)}<br>${r.text}
+    <button class="delete-review" style="background:red;color:#fff;border:none;border-radius:4px;padding:2px 4px;margin-left:5px;">Delete</button>
+  `;
+  div.querySelector(".delete-review").addEventListener("click",()=>{
+    reviews[pid].splice(index,1);
+    localStorage.setItem("reviews",JSON.stringify(reviews));
+    renderReviewList(pid);
+    renderProducts(products); // update stars on cards
   });
-}
+  reviewList.appendChild(div);
+});
 
 // ---------- Checkout ----------
 checkoutBtn.addEventListener("click", ()=>{
@@ -288,5 +300,6 @@ confirmOrder.addEventListener("click",()=>{
 // ---------- Init ----------
 renderProducts(products);
 updateCartUI();
+
 
 
