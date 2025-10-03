@@ -1,16 +1,16 @@
 const products = [
-  {id:1, name:"Cotton T-shirt", category:"Clothing", price:499, img:"https://images.unsplash.com/photo-1593032465170-56df36f1f7a8?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Comfortable cotton t-shirt."},
-  {id:2, name:"Leather Wallet", category:"Accessories", price:1299, img:"https://images.unsplash.com/photo-1580422461601-2ed2c09f4907?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Premium leather wallet."},
-  {id:3, name:"Bluetooth Headphones", category:"Electronics", price:2499, img:"https://images.unsplash.com/photo-1518449029125-5dc3c7f27a47?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"High-quality sound."},
-  {id:4, name:"Sports Shoes", category:"Footwear", price:1999, img:"https://images.unsplash.com/photo-1618354699404-f58602c85db3?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Durable and comfortable."},
-  {id:5, name:"Wrist Watch", category:"Accessories", price:3499, img:"https://images.unsplash.com/photo-1519648023493-d82b5f8d7d66?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Elegant wrist watch."},
-  {id:6, name:"Cooking Pan", category:"Home & Kitchen", price:1599, img:"https://images.unsplash.com/photo-1607465882228-d41faec7a91f?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Non-stick cooking pan."},
-  {id:7, name:"Novel Book", category:"Books", price:399, img:"https://images.unsplash.com/photo-1512820790803-83ca734da794?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Bestseller novel."},
-  {id:8, name:"Yoga Mat", category:"Sports", price:799, img:"https://images.unsplash.com/photo-1594737625785-6ad0e9d6bb76?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Eco-friendly yoga mat."},
-  {id:9, name:"Perfume", category:"Beauty", price:2299, img:"https://images.unsplash.com/photo-1600180759430-3c70f503d0e7?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Fragrant perfume."},
-  {id:10, name:"Toy Car", category:"Toys", price:699, img:"https://images.unsplash.com/photo-1583162906563-2b873fc98e3d?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Fun toy car."},
-  {id:11, name:"Sunglasses", category:"Accessories", price:1599, img:"https://images.unsplash.com/photo-1504198453319-5ce911bafcde?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Stylish UV protection sunglasses."},
-  {id:12, name:"Backpack", category:"Bags", price:2199, img:"https://images.unsplash.com/photo-1589571894960-20bbe2828f3e?crop=entropy&cs=tinysrgb&fit=max&w=300&h=200", desc:"Durable travel backpack."}
+  {id:1,name:"Cotton T-shirt",category:"Clothing",price:499,img:"https://images.unsplash.com/photo-1520974697291-34a3e84b7e5b?auto=format&fit=crop&w=300&q=80",desc:"Comfortable cotton t-shirt."},
+  {id:2,name:"Leather Wallet",category:"Accessories",price:1299,img:"https://images.unsplash.com/photo-1606813903903-9bfc1e2fcdb1?auto=format&fit=crop&w=300&q=80",desc:"Premium leather wallet."},
+  {id:3,name:"Bluetooth Headphones",category:"Electronics",price:2499,img:"https://images.unsplash.com/photo-1580910051075-6c9eb8cc4fdf?auto=format&fit=crop&w=300&q=80",desc:"High-quality sound."},
+  {id:4,name:"Novel Book",category:"Books",price:399,img:"https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=300&q=80",desc:"Bestselling novel book."},
+  {id:5,name:"Sneakers",category:"Clothing",price:1999,img:"https://images.unsplash.com/photo-1595950651913-18a4c1fa6228?auto=format&fit=crop&w=300&q=80",desc:"Comfortable sneakers for daily wear."},
+  {id:6,name:"Sunglasses",category:"Accessories",price:799,img:"https://images.unsplash.com/photo-1512069772994-66b5e9d2f4e8?auto=format&fit=crop&w=300&q=80",desc:"Stylish UV-protection sunglasses."},
+  {id:7,name:"Smartphone",category:"Electronics",price:29999,img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80",desc:"Latest smartphone with great features."},
+  {id:8,name:"Wrist Watch",category:"Accessories",price:3499,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=300&q=80",desc:"Elegant wrist watch for all occasions."},
+  {id:9,name:"Jeans",category:"Clothing",price:1499,img:"https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=300&q=80",desc:"Comfortable blue jeans."},
+  {id:10,name:"Laptop",category:"Electronics",price:49999,img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=300&q=80",desc:"High-performance laptop for work and gaming."},
+  {id:11,name:"Backpack",category:"Accessories",price:1199,img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80",desc:"Spacious backpack for travel and college."},
+  {id:12,name:"Headphones",category:"Electronics",price:1999,img:"https://images.unsplash.com/photo-1590608897129-79c2bfa4e5b4?auto=format&fit=crop&w=300&q=80",desc:"Wireless headphones with noise cancellation."}
 ];
 
 const productsGrid = document.getElementById("productsGrid");
@@ -187,3 +187,4 @@ document.getElementById("confirmOrder").onclick=()=>{
   cartModal.style.display="none";
   cartBtn.textContent="Cart (0)";
 };
+
