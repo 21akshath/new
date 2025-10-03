@@ -16,15 +16,6 @@ body {
   color: #111;
 }
 
-/* Dark mode */
-body.dark {
-  --bg: #0a0f0a;
-  --card: #1c1f1c;
-  --muted: #9ca3af;
-  --green-500: #22c55e;
-  --green-600: #16a34a;
-  color:#f3f4f6;
-}
 
 /* Header */
 .site-header {
@@ -119,4 +110,5 @@ textarea {resize:vertical;}
 .categories li {padding:0.3rem 0;cursor:pointer;}
 .categories li:hover{text-decoration:underline;}
 .cart-item {display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid #eee;}
+
 body.dark .cart-item {border-color:#444;}
