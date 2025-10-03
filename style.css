@@ -18,6 +18,7 @@ body {
 
 .site-header .brand h1 {
   margin: 0;
+  font-size: 1.8rem;
 }
 
 .site-header .controls {
@@ -52,31 +53,35 @@ body {
 .categories {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .categories li {
-  padding: 0.5rem 0;
+  padding: 0.6rem 0;
   border-bottom: 1px solid #e5e7eb;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .categories li:hover {
   color: #10b981;
+  font-weight: 600;
 }
 
 /* -------- Product Card -------- */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
 }
 
 .product-card {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
+  max-width: 220px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.2s;
 }
 
@@ -91,16 +96,21 @@ body {
 }
 
 .card-body {
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 0.8rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .price-row {
+  font-weight: 700;
+  margin-top: 0.2rem;
+}
+
+.card-actions {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-top: 0.4rem;
 }
 
 .btn {
@@ -108,19 +118,25 @@ body {
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  background: #10b981;
-  color: #fff;
-  transition: background 0.2s;
+  transition: 0.2s;
 }
 
-.btn:hover {
+.btn-primary {
+  background: #10b981;
+  color: #fff;
+}
+
+.btn-primary:hover {
   background: #059669;
 }
 
-/* -------- Ratings -------- */
-.rating {
-  margin-top: 0.3rem;
-  font-size: 0.9rem;
+.btn-secondary {
+  background: #6b7280;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
 }
 
 /* -------- Modals -------- */
@@ -137,7 +153,7 @@ body {
 .cart-panel {
   background: #fff;
   border-radius: 12px;
-  max-width: 400px;
+  max-width: 500px;
   width: 90%;
   max-height: 90%;
   overflow-y: auto;
@@ -158,9 +174,23 @@ body {
   cursor: pointer;
 }
 
-.cart-contents div, .checkout-contents div {
+.cart-contents div,
+.checkout-contents div,
+#reviewList div {
   padding: 0.5rem 0;
   border-bottom: 1px solid #e5e7eb;
+}
+
+.details-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+  border-radius: 8px;
+}
+
+#reviewList div {
+  margin-bottom: 0.5rem;
 }
 
 /* -------- Free Delivery Box -------- */
@@ -173,4 +203,3 @@ body {
   font-weight: 600;
   color: #065f46;
 }
-
