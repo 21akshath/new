@@ -141,18 +141,6 @@ sortSelect.addEventListener("change",()=>{
 cartBtn.addEventListener("click",()=>{ cartModal.style.display="flex"; cartModal.setAttribute("aria-hidden","false"); });
 closeCart.addEventListener("click",()=>{ cartModal.style.display="none"; cartModal.setAttribute("aria-hidden","true"); });
 
-// ---------- Dark Mode ----------
-if(localStorage.getItem("darkMode")==="true"){
-  document.body.classList.add("dark");
-  darkModeToggle.textContent="☀️";
-}
-darkModeToggle.addEventListener("click",()=>{
-  document.body.classList.toggle("dark");
-  const isDark=document.body.classList.contains("dark");
-  localStorage.setItem("darkMode",isDark);
-  darkModeToggle.textContent=isDark?"☀️":"🌙";
-});
-
 // ---------- Reviews ----------
 function getAverageRating(pid){
   if(!reviews[pid] || reviews[pid].length===0) return 0;
@@ -290,3 +278,4 @@ confirmOrder.addEventListener("click",()=>{
 // ---------- Init ----------
 renderProducts(products);
 updateCartUI();
+
