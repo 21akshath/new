@@ -13,17 +13,15 @@
       <p class="tag">Fresh picks. Eco-friendly shopping.</p>
     </div>
     <div class="controls">
-  <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
-  <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
-</div>
+      <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
+      <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
+    </div>
   </header>
 
   <main class="main">
     <aside class="sidebar">
       <h2>Categories</h2>
-      <ul id="categoryList" class="categories">
-        <!-- populated by JS -->
-      </ul>
+      <ul id="categoryList" class="categories"></ul>
     </aside>
 
     <section class="catalog">
@@ -39,10 +37,7 @@
           </select>
         </div>
       </div>
-
-      <div id="productsGrid" class="products-grid" aria-live="polite">
-        <!-- product cards populated by JS -->
-      </div>
+      <div id="productsGrid" class="products-grid" aria-live="polite"></div>
     </section>
   </main>
 
@@ -67,25 +62,14 @@
     </div>
   </div>
 
-  <!-- Product Details Modal -->
+  <!-- Details Modal -->
   <div id="detailsModal" class="cart-modal" aria-hidden="true">
     <div class="cart-panel" role="dialog" aria-labelledby="detailsTitle">
       <header class="cart-header">
         <h2 id="detailsTitle">Product Details</h2>
-        <button id="closeDetails" class="close-btn" aria-label="Close details">✕</button>
+        <button id="closeDetails" class="close-btn" aria-label="Close">✕</button>
       </header>
       <div id="detailsContents" class="cart-contents"></div>
-    </div>
-  </div>
-
-  <!-- Checkout Modal -->
-  <div id="checkoutModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel" role="dialog" aria-labelledby="checkoutTitle">
-      <header class="cart-header">
-        <h2 id="checkoutTitle">Checkout</h2>
-        <button id="closeCheckout" class="close-btn" aria-label="Close checkout">✕</button>
-      </header>
-      <div id="checkoutContents" class="cart-contents"></div>
     </div>
   </div>
 
@@ -98,7 +82,9 @@
         <div class="price-row">
           <div class="price">₹<span class="price-value"></span></div>
           <button class="add-cart btn-small">Add to Cart</button>
+          <button class="view-details btn-small">View Details</button>
         </div>
+        <div class="rating"></div>
       </div>
     </article>
   </template>
@@ -106,4 +92,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
