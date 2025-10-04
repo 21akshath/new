@@ -74,19 +74,24 @@
   </div>
 
   <template id="productCardTemplate">
-    <article class="product-card">
-      <img class="product-image" alt="Product image" />
-      <div class="card-body">
-        <h3 class="product-title"></h3>
-        <p class="product-category"></p>
-        <div class="price-row">
-          <div class="price">₹<span class="price-value"></span></div>
+  <article class="product-card">
+    <img class="product-image" alt="Product image" />
+    <div class="card-body">
+      <h3 class="product-title"></h3>
+      <p class="product-category"></p>
+      <div class="rating"></div> <!-- ⭐ rating stars here -->
+      <div class="price-row">
+        <div class="price">₹<span class="price-value"></span></div>
+        <div>
           <button class="add-cart btn-small">Add to Cart</button>
+          <button class="view-details btn-small">View</button>
         </div>
       </div>
-    </article>
-  </template>
+    </div>
+  </article>
+</template>
 
   <script src="script.js"></script>
 </body>
 </html>
+
