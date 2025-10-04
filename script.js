@@ -1,137 +1,127 @@
-// ===== Global Variables =====
-let reviews = JSON.parse(localStorage.getItem("reviews")) || {};
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// ===== Products with Unsplash Images =====
-let products = [
-  { id: 1, name: "Smart Watch", price: 2999, category: "Electronics", image: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=600&auto=format&fit=crop&q=80" },
-  { id: 2, name: "Headphones", price: 1999, category: "Electronics", image: "https://images.unsplash.com/photo-1518449037760-5f1be8d1e4b7?w=600&auto=format&fit=crop&q=80" },
-  { id: 3, name: "Running Shoes", price: 2499, category: "Fashion", image: "https://images.unsplash.com/photo-1528701800489-20be9c1e4a52?w=600&auto=format&fit=crop&q=80" },
-  { id: 4, name: "Backpack", price: 1499, category: "Fashion", image: "https://images.unsplash.com/photo-1504280390368-3971edcda2a3?w=600&auto=format&fit=crop&q=80" },
-  { id: 5, name: "Sunglasses", price: 799, category: "Fashion", image: "https://images.unsplash.com/photo-1518544889289-9278fdf4b511?w=600&auto=format&fit=crop&q=80" },
-  { id: 6, name: "Cotton T-Shirt", price: 1199, category: "Fashion", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&auto=format&fit=crop&q=80" },
-  { id: 7, name: "Jeans", price: 1599, category: "Fashion", image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80" },
-  { id: 8, name: "Leather Wallet", price: 899, category: "Fashion", image: "https://images.unsplash.com/photo-1606813902910-9b54e6dbd7d4?w=600&auto=format&fit=crop&q=80" },
-  { id: 9, name: "Novel Book", price: 499, category: "Books", image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&auto=format&fit=crop&q=80" },
-  { id: 10, name: "Notebook", price: 199, category: "Books", image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format&fit=crop&q=80" },
-  { id: 11, name: "Gaming Mouse", price: 999, category: "Electronics", image: "https://images.unsplash.com/photo-1587202372775-98908d12596b?w=600&auto=format&fit=crop&q=80" },
-  { id: 12, name: "Water Bottle", price: 399, category: "Lifestyle", image: "https://images.unsplash.com/photo-1526401485004-2fda9f4d1c84?w=600&auto=format&fit=crop&q=80" }
+const products = [
+  {id:1, name:"Cotton T-shirt", category:"Clothing", price:499, img:"https://source.unsplash.com/300x200/?tshirt"},
+  {id:2, name:"Leather Wallet", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?wallet"},
+  {id:3, name:"Bluetooth Headphones", category:"Electronics", price:2499, img:"https://source.unsplash.com/300x200/?headphones"},
+  {id:4, name:"Sports Shoes", category:"Footwear", price:1999, img:"https://source.unsplash.com/300x200/?shoes"},
+  {id:5, name:"Wrist Watch", category:"Accessories", price:3499, img:"https://source.unsplash.com/300x200/?watch"},
+  {id:6, name:"Cooking Pan", category:"Home & Kitchen", price:1599, img:"https://source.unsplash.com/300x200/?kitchen"},
+  {id:7, name:"Novel Book", category:"Books", price:399, img:"https://source.unsplash.com/300x200/?book"},
+  {id:8, name:"Yoga Mat", category:"Sports", price:799, img:"https://source.unsplash.com/300x200/?yoga"},
+  {id:9, name:"Perfume", category:"Beauty", price:2299, img:"https://source.unsplash.com/300x200/?perfume"},
+  {id:10, name:"Toy Car", category:"Toys", price:699, img:"https://source.unsplash.com/300x200/?toycar"}
 ];
 
-// ===== Render Products =====
-function renderProducts(products) {
-  const productList = document.getElementById("product-list");
-  productList.innerHTML = "";
+const categories = ["All","Clothing","Accessories","Electronics","Footwear","Home & Kitchen","Books","Sports","Beauty","Toys"];
 
-  products.forEach(product => {
-    const card = document.createElement("div");
-    card.className = "product-card";
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>₹${product.price}</p>
-      <button onclick="addToCart(${product.id})">Add to Cart</button>
-      <button onclick="viewDetails(${product.id})">View Details</button>
-    `;
-    productList.appendChild(card);
+// Elements
+const productsGrid = document.getElementById("productsGrid");
+const productCardTemplate = document.getElementById("productCardTemplate");
+const categoryList = document.getElementById("categoryList");
+const activeCategory = document.getElementById("activeCategory");
+const cartBtn = document.getElementById("cartBtn");
+const cartModal = document.getElementById("cartModal");
+const closeCart = document.getElementById("closeCart");
+const cartCount = document.getElementById("cartCount");
+const cartContents = document.getElementById("cartContents");
+const cartSubtotal = document.getElementById("cartSubtotal");
+const clearCartBtn = document.getElementById("clearCart");
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+
+// Render category list
+categories.forEach(cat=>{
+  const li = document.createElement("li");
+  li.textContent = cat;
+  li.addEventListener("click", ()=>filterCategory(cat));
+  categoryList.appendChild(li);
+});
+
+// Render products
+function renderProducts(list){
+  productsGrid.innerHTML="";
+  list.forEach(p=>{
+    const card = productCardTemplate.content.cloneNode(true);
+    card.querySelector(".product-title").textContent = p.name;
+    card.querySelector(".product-category").textContent = p.category;
+    card.querySelector(".price-value").textContent = p.price;
+    const img = card.querySelector(".product-image");
+    img.src = p.img;
+    img.onerror = ()=>{ img.src="https://via.placeholder.com/300x200?text=No+Image"; };
+    card.querySelector(".add-cart").addEventListener("click", ()=>addToCart(p.id));
+    productsGrid.appendChild(card);
   });
 }
 
-// ===== Add to Cart =====
-function addToCart(id) {
-  const product = products.find(p => p.id === id);
-  cart.push(product);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
+// Filter by category
+function filterCategory(cat){
+  activeCategory.textContent = cat==="All" ? "All Products" : cat;
+  let list = cat==="All" ? products : products.filter(p=>p.category===cat);
+  renderProducts(list);
 }
 
-// ===== Update Cart Count =====
-function updateCartCount() {
-  document.getElementById("cartCount").textContent = cart.length;
+// Add to cart
+function addToCart(id){
+  let item = cart.find(i=>i.id===id);
+  if(item){ item.qty++; }
+  else{ cart.push({id, qty:1}); }
+  saveCart();
 }
 
-// ===== View Details =====
-function viewDetails(id) {
-  const product = products.find(p => p.id === id);
-  document.getElementById("modalTitle").textContent = product.name;
-  document.getElementById("modalImage").src = product.image;
-  document.getElementById("modalPrice").textContent = "₹" + product.price;
-
-  document.getElementById("reviewForm").dataset.productId = id;
-  renderReviewList(id);
-
-  document.getElementById("productModal").style.display = "block";
+// Save + update cart
+function saveCart(){
+  localStorage.setItem("cart",JSON.stringify(cart));
+  updateCartUI();
 }
 
-// ===== Close Modal =====
-function closeModal() {
-  document.getElementById("productModal").style.display = "none";
-}
-
-// ===== Render Reviews =====
-function renderReviewList(pid) {
-  const reviewList = document.getElementById("reviewList");
-  reviewList.innerHTML = "";
-
-  if (!reviews[pid] || reviews[pid].length === 0) {
-    reviewList.textContent = "No reviews yet.";
-    return;
-  }
-
-  reviews[pid].forEach((r, idx) => {
+// Update cart UI
+function updateCartUI(){
+  cartCount.textContent = cart.reduce((a,c)=>a+c.qty,0);
+  cartContents.innerHTML="";
+  let subtotal=0;
+  cart.forEach(item=>{
+    const p = products.find(prod=>prod.id===item.id);
+    subtotal+=p.price*item.qty;
     const div = document.createElement("div");
-    div.style.borderBottom = "1px solid #ddd";
-    div.style.padding = "0.3rem 0";
-    div.innerHTML = `
-      <strong>${r.name}</strong> ${"⭐".repeat(r.rating)}<br>${r.text}
-      <button class="deleteReview" data-index="${idx}" style="margin-left:10px;color:red">Delete</button>
+    div.className="cart-item";
+    div.innerHTML=`
+      <div><strong>${p.name}</strong> x${item.qty}</div>
+      <div>₹${p.price*item.qty}</div>
     `;
-    reviewList.appendChild(div);
+    cartContents.appendChild(div);
   });
-
-  reviewList.querySelectorAll(".deleteReview").forEach(btn => {
-    btn.addEventListener("click", () => {
-      reviews[pid].splice(btn.dataset.index, 1);
-      localStorage.setItem("reviews", JSON.stringify(reviews));
-      renderReviewList(pid);
-      renderProducts(products);
-    });
-  });
+  cartSubtotal.textContent=`₹${subtotal}`;
 }
 
-// ===== Submit Review =====
-document.getElementById("reviewForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const pid = e.target.dataset.productId;
-  const name = document.getElementById("reviewerName").value;
-  const rating = parseInt(document.getElementById("reviewRating").value);
-  const text = document.getElementById("reviewText").value;
-
-  if (!reviews[pid]) reviews[pid] = [];
-  reviews[pid].push({ name, rating, text });
-  localStorage.setItem("reviews", JSON.stringify(reviews));
-
-  renderReviewList(pid);
-  e.target.reset();
+// Clear cart
+clearCartBtn.addEventListener("click",()=>{
+  cart=[];
+  saveCart();
 });
 
-// ===== Checkout =====
-function checkout() {
-  if (cart.length === 0) {
-    alert("Cart is empty!");
-    return;
+// Search
+searchInput.addEventListener("input",()=>{
+  const val=searchInput.value.toLowerCase();
+  const list=products.filter(p=>p.name.toLowerCase().includes(val));
+  renderProducts(list);
+});
+
+// Sort
+sortSelect.addEventListener("change",()=>{
+  let list=[...products];
+  switch(sortSelect.value){
+    case "low": list.sort((a,b)=>a.price-b.price); break;
+    case "high": list.sort((a,b)=>b.price-a.price); break;
+    case "alpha": list.sort((a,b)=>a.name.localeCompare(b.name)); break;
   }
-  alert(`You have ${cart.length} items in your cart. Order placed successfully!`);
-  cart = [];
-  localStorage.setItem("cart", JSON.stringify(cart));
-  updateCartCount();
-}
-
-// ===== On Page Load =====
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts(products);
-  updateCartCount();
+  renderProducts(list);
 });
 
+// Cart modal
+cartBtn.addEventListener("click",()=>{ cartModal.style.display="flex"; cartModal.setAttribute("aria-hidden","false"); });
+closeCart.addEventListener("click",()=>{ cartModal.style.display="none"; cartModal.setAttribute("aria-hidden","true"); });
 
+// Init
+renderProducts(products);
+updateCartUI();
