@@ -1,42 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GreenCart — Product Showcase</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Header -->
   <header class="site-header">
     <div class="brand">
       <h1>GreenCart</h1>
       <p class="tag">Fresh picks. Eco-friendly shopping.</p>
     </div>
     <div class="controls">
-      <input id="searchInput" type="search" placeholder="Search products..." />
+      <input type="search" id="searchInput" placeholder="Search products...">
       <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
     </div>
   </header>
 
+  <!-- Main layout -->
   <main class="main">
+    <!-- Sidebar -->
     <aside class="sidebar">
       <h2>Categories</h2>
-      <ul id="categoryList" class="categories"></ul>
+      <ul id="categoryList" class="categories">
+        <!-- JS populates categories -->
+      </ul>
     </aside>
 
+    <!-- Product catalog -->
     <section class="catalog">
       <div class="toolbar">
         <div id="activeCategory" class="active-category">All Products</div>
+        <div class="sort-wrap">
+          <label for="sortSelect">Sort:</label>
+          <select id="sortSelect">
+            <option value="default">Featured</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+            <option value="alpha">Name A → Z</option>
+          </select>
+        </div>
       </div>
-      <div id="productsGrid" class="products-grid"></div>
+      <div id="productsGrid" class="products-grid" aria-live="polite">
+        <!-- JS populates product cards -->
+      </div>
     </section>
   </main>
 
   <!-- Cart Modal -->
   <div id="cartModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel">
+    <div class="cart-panel" role="dialog" aria-labelledby="cartTitle">
       <header class="cart-header">
-        <h2>Your Cart</h2>
+        <h2 id="cartTitle">Your Cart</h2>
         <button id="closeCart" class="close-btn">✕</button>
       </header>
       <div id="cartContents" class="cart-contents"></div>
@@ -53,10 +71,25 @@
     </div>
   </div>
 
-  <!-- Add to Cart Notification -->
-  <div id="cartNotification" class="cart-notification">Added to cart!</div>
+  <!-- Cart Notification -->
+  <div id="cartNotification">Added to cart!</div>
+
+  <!-- Product Card Template -->
+  <template id="productCardTemplate">
+    <article class="product-card">
+      <img class="product-image" alt="Product image">
+      <div class="card-body">
+        <h3 class="product-title"></h3>
+        <p class="product-category"></p>
+        <div class="price-row">
+          <div class="price">₹<span class="price-value"></span></div>
+          <button class="add-cart btn-small">Add to Cart</button>
+          <button class="view-details btn-small" style="background:var(--green-500);color:#fff;margin-left:5px">View Details</button>
+        </div>
+      </div>
+    </article>
+  </template>
 
   <script src="script.js"></script>
 </body>
 </html>
-
