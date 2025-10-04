@@ -76,20 +76,23 @@
 
   <!-- Product Card Template -->
   <template id="productCardTemplate">
-    <article class="product-card">
-      <img class="product-image" alt="Product image">
-      <div class="card-body">
-        <h3 class="product-title"></h3>
-        <p class="product-category"></p>
-        <div class="price-row">
-          <div class="price">₹<span class="price-value"></span></div>
-          <button class="add-cart btn-small">Add to Cart</button>
-          <button class="view-details btn-small" style="background:var(--green-500);color:#fff;margin-left:5px">View Details</button>
-        </div>
+  <article class="product-card">
+    <img class="product-image" alt="Product image" />
+    <div class="card-body">
+      <h3 class="product-title"></h3>
+      <p class="product-category"></p>
+      <div class="price-row">
+        <div class="price">₹<span class="price-value"></span></div>
+        <button class="add-cart btn-small">Add to Cart</button>
       </div>
-    </article>
-  </template>
+      <!-- Add the View Details button -->
+      <button class="view-details">View Details</button>
+    </div>
+  </article>
+</template>
+
 
   <script src="script.js"></script>
 </body>
 </html>
+
