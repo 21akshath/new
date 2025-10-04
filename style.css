@@ -148,3 +148,61 @@ body{
 .btn{padding:0.5rem 1rem;border-radius:var(--radius);cursor:pointer}
 .btn-primary{background:var(--green-600);color:#fff;border:none}
 .btn-outline{background:none;border:1px solid var(--green-600);color:var(--green-600)}
+/* ---------- VIEW DETAILS MODAL ---------- */
+#detailsModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+#detailsModal .cart-panel {
+  background: #e9fdf0; /* light green background */
+  border-left: 5px solid var(--green-500);
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+#detailsModal .cart-header {
+  background: var(--green-500);
+  color: #fff;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+#detailsContents h3 {
+  color: var(--green-600);
+  margin-top: 0.5rem;
+}
+
+#detailsContents img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+}
+
+#detailsContents button.add-cart,
+#detailsContents button.btn-primary,
+#detailsContents button.btn-outline {
+  margin-top: 0.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+#detailsContents textarea, 
+#detailsContents input, 
+#detailsContents select {
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+
