@@ -1,64 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Green Cart E-Commerce</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GreenCart — Product Showcase</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Green Cart</h1>
-    <input type="text" id="searchBar" placeholder="Search products...">
-    <select id="priceSort">
-      <option value="default">Sort by Price</option>
-      <option value="low">Low to High</option>
-      <option value="high">High to Low</option>
-    </select>
-    <div id="cartIcon">Cart 🛒 <span id="cartCount">0</span></div>
+  <header class="site-header">
+    <div class="brand">
+      <h1>GreenCart</h1>
+      <p class="tag">Fresh picks. Eco-friendly shopping.</p>
+    </div>
+    <div class="controls">
+      <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
+      <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
+    </div>
   </header>
 
-  <main class="main-container">
-    <!-- Left Sidebar - Categories -->
+  <main class="main">
     <aside class="sidebar">
       <h2>Categories</h2>
-      <select id="categoryFilter">
-        <option value="all">All Categories</option>
-        <option value="laptop">Laptop</option>
-        <option value="smartphone">Smartphone</option>
-        <option value="electronics">Electronics</option>
-        <option value="accessories">Accessories</option>
-        <option value="tablet">Tablet</option>
-        <option value="gaming">Gaming</option>
-        <option value="camera">Camera</option>
-        <option value="fitness">Fitness</option>
-      </select>
+      <ul id="categoryList" class="categories">
+        <!-- populated by JS -->
+      </ul>
+      <div class="promo">
+        <h3>Quick Info</h3>
+        <p>Prices in Indian Rupees (₹). Free delivery over ₹2,000.</p>
+      </div>
     </aside>
 
-    <!-- Center - Products -->
-    <section id="productsContainer" class="products-section"></section>
+    <section class="catalog">
+      <div class="toolbar">
+        <div id="activeCategory" class="active-category">All Products</div>
+        <div id="sortWrap" class="sort-wrap">
+          <label for="sortSelect">Sort:</label>
+          <select id="sortSelect">
+            <option value="default">Featured</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+            <option value="alpha">Name A → Z</option>
+          </select>
+        </div>
+      </div>
 
-    <!-- Right Sidebar - Quick Info / Reviews -->
-    <aside id="detailsSidebar" class="details-sidebar">
-      <h2 id="detailsTitle">Product Info</h2>
-      <img id="detailsImage" alt="">
-      <p id="detailsPrice"></p>
-      <button id="addToCartFromDetails">Add to Cart</button>
-
-      <h3>User Reviews</h3>
-      <ul id="reviewsList"></ul>
-      <textarea id="reviewInput" placeholder="Write a review..."></textarea>
-      <br>
-      <label>Rating:</label>
-      <select id="starRating">
-        <option value="1">⭐</option>
-        <option value="2">⭐⭐</option>
-        <option value="3">⭐⭐⭐</option>
-        <option value="4">⭐⭐⭐⭐</option>
-        <option value="5">⭐⭐⭐⭐⭐</option>
-      </select>
-      <button id="submitReview">Submit</button>
-    </aside>
+      <div id="productsGrid" class="products-grid" aria-live="polite">
+        <!-- product cards populated by JS -->
+      </div>
+    </section>
   </main>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="cartTitle">
+      <header class="cart-header">
+        <h2 id="cartTitle">Your Cart</h2>
+        <button id="closeCart" class="close-btn" aria-label="Close cart">✕</button>
+      </header>
+      <div id="cartContents" class="cart-contents">
+        <!-- cart items injected by JS -->
+      </div>
+      <footer class="cart-footer">
+        <div class="cart-summary">
+          <div>Subtotal:</div>
+          <div id="cartSubtotal">₹0</div>
+        </div>
+        <div class="cart-actions">
+          <button id="clearCart" class="btn btn-outline">Clear</button>
+          <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <template id="productCardTemplate">
+    <article class="product-card">
+      <img class="product-image" alt="Product image" />
+      <div class="card-body">
+        <h3 class="product-title"></h3>
+        <p class="product-category"></p>
+        <div class="price-row">
+          <div class="price">₹<span class="price-value"></span></div>
+          <button class="add-cart btn-small">Add to Cart</button>
+        </div>
+      </div>
+    </article>
+  </template>
 
   <script src="script.js"></script>
 </body>
