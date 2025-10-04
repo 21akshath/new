@@ -62,10 +62,8 @@ function renderProducts(list){
     card.querySelector(".add-cart").addEventListener("click", ()=>addToCart(p.id));
     card.querySelector(".view-details").addEventListener("click", ()=>openDetails(p.id));
 
-    // Average rating
-    const ratingDiv = card.querySelector(".rating");
-    const avg = getAverageRating(p.id);
-    ratingDiv.innerHTML = "⭐".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
+  // Remove star rating on product cards
+card.querySelector(".rating").innerHTML = "";
 
     productsGrid.appendChild(card);
   });
@@ -222,3 +220,4 @@ closeDetails.addEventListener("click",()=>{
 // ---------- INIT ----------
 renderProducts(products);
 updateCartUI();
+
