@@ -1,4 +1,4 @@
-// ---------- Products & Categories ----------
+// ---------- Products ----------
 const products = [
   {id:1, name:"Cotton T-shirt", category:"Clothing", price:499, img:"https://source.unsplash.com/300x200/?tshirt", desc:"Comfortable cotton t-shirt."},
   {id:2, name:"Leather Wallet", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?wallet", desc:"Premium leather wallet."},
@@ -33,21 +33,20 @@ const cartSubtotal = document.getElementById("cartSubtotal");
 const clearCartBtn = document.getElementById("clearCart");
 const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
-const cartNotification = document.getElementById("cartNotification");
 
-// Details Modal
+// Details modal
 const detailsModal = document.getElementById("detailsModal");
 const closeDetails = document.getElementById("closeDetails");
 const detailsContents = document.getElementById("detailsContents");
 
-// Checkout Modal
+// Checkout modal
 const checkoutModal = document.getElementById("checkoutModal");
 const closeCheckout = document.getElementById("closeCheckout");
 const checkoutContents = document.getElementById("checkoutContents");
 const checkoutBtn = document.getElementById("checkoutBtn");
 const confirmOrder = document.getElementById("confirmOrder");
 
-// ---------- Category List ----------
+// ---------- Render Categories ----------
 categories.forEach(cat=>{
   const li = document.createElement("li");
   li.textContent = cat;
@@ -66,8 +65,18 @@ function renderProducts(list){
     const img = card.querySelector(".product-image");
     img.src = p.img;
     img.onerror = ()=>{ img.src="https://via.placeholder.com/300x200?text=No+Image"; };
-    card.querySelector(".add-cart").addEventListener("click", ()=>addToCart(p.id));
+
+    card.querySelector(".add-cart").addEventListener("click", ()=>{
+      addToCart(p.id);
+      alert(`${p.name} added to cart!`);
+    });
+
     card.querySelector(".view-details").addEventListener("click", ()=>openDetails(p.id));
+
+    const ratingDiv = card.querySelector(".rating");
+    const avg = getAverageRating(p.id);
+    ratingDiv.innerHTML = "⭐".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
+
     productsGrid.appendChild(card);
   });
 }
@@ -75,29 +84,23 @@ function renderProducts(list){
 // ---------- Filter Category ----------
 function filterCategory(cat){
   activeCategory.textContent = cat==="All" ? "All Products" : cat;
-  let list = cat==="All" ? products : products.filter(p=>p.category===cat);
+  const list = cat==="All" ? products : products.filter(p=>p.category===cat);
   renderProducts(list);
 }
 
-// ---------- Add to Cart ----------
+// ---------- Cart Functions ----------
 function addToCart(id){
-  let item = cart.find(i => i.id === id);
-  if(item){ item.qty++; }
-  else{ cart.push({id, qty:1}); }
+  let item = cart.find(i=>i.id===id);
+  if(item){ item.qty++; } 
+  else { cart.push({id, qty:1}); }
   saveCart();
-
-  // Cart notification
-  cartNotification.style.display="block";
-  setTimeout(()=>{cartNotification.style.display="none";},1500);
 }
 
-// ---------- Save Cart ----------
 function saveCart(){
   localStorage.setItem("cart",JSON.stringify(cart));
   updateCartUI();
 }
 
-// ---------- Update Cart UI ----------
 function updateCartUI(){
   cartCount.textContent = cart.reduce((a,c)=>a+c.qty,0);
   cartContents.innerHTML="";
@@ -107,28 +110,30 @@ function updateCartUI(){
     subtotal+=p.price*item.qty;
     const div = document.createElement("div");
     div.className="cart-item";
-    div.innerHTML=`<div><strong>${p.name}</strong> x${item.qty}</div><div>₹${p.price*item.qty}</div>`;
+    div.innerHTML=`
+      <div><strong>${p.name}</strong> x${item.qty}</div>
+      <div>₹${p.price*item.qty}</div>
+    `;
     cartContents.appendChild(div);
   });
   cartSubtotal.textContent=`₹${subtotal}`;
 }
 
-// ---------- Clear Cart ----------
-clearCartBtn.addEventListener("click",()=>{
+clearCartBtn.addEventListener("click", ()=>{
   cart=[];
   saveCart();
 });
 
 // ---------- Search ----------
-searchInput.addEventListener("input",()=>{
-  const val=searchInput.value.toLowerCase();
-  const list=products.filter(p=>p.name.toLowerCase().includes(val));
+searchInput.addEventListener("input", ()=>{
+  const val = searchInput.value.toLowerCase();
+  const list = products.filter(p=>p.name.toLowerCase().includes(val));
   renderProducts(list);
 });
 
 // ---------- Sort ----------
-sortSelect.addEventListener("change",()=>{
-  let list=[...products];
+sortSelect.addEventListener("change", ()=>{
+  let list = [...products];
   switch(sortSelect.value){
     case "low": list.sort((a,b)=>a.price-b.price); break;
     case "high": list.sort((a,b)=>b.price-a.price); break;
@@ -159,8 +164,10 @@ function renderReviewList(pid){
     const div=document.createElement("div");
     div.style.borderBottom="1px solid #ddd";
     div.style.padding="0.3rem 0";
-    div.innerHTML=`<strong>${r.name}</strong> ${"⭐".repeat(r.rating)}<br>${r.text} 
-      <button class="deleteReview" data-index="${idx}" style="margin-left:10px;color:red">Delete</button>`;
+    div.innerHTML=`
+      <strong>${r.name}</strong> ${"⭐".repeat(r.rating)}<br>${r.text}
+      <button class="deleteReview" data-index="${idx}" style="margin-left:10px;color:red">Delete</button>
+    `;
     reviewList.appendChild(div);
   });
 
@@ -174,7 +181,7 @@ function renderReviewList(pid){
   });
 }
 
-// ---------- View Details ----------
+// ---------- Details Modal ----------
 function openDetails(pid){
   const p = products.find(x=>x.id===pid);
   detailsContents.innerHTML="";
@@ -185,7 +192,7 @@ function openDetails(pid){
     <p><strong>Category:</strong> ${p.category}</p>
     <p><strong>Price:</strong> ₹${p.price}</p>
     <p>${p.desc}</p>
-    <div id="detailsRating">${"⭐".repeat(Math.round(getAverageRating(p.id)))}${"☆".repeat(5-Math.round(getAverageRating(p.id)))}</div>
+    <div id="detailsRating">⭐${"⭐".repeat(Math.round(getAverageRating(p.id)))}☆${"☆".repeat(5-Math.round(getAverageRating(p.id)))}</div>
     <h4>Reviews:</h4>
     <div id="reviewList"></div>
     <h4>Add Review:</h4>
@@ -206,9 +213,9 @@ function openDetails(pid){
   renderReviewList(pid);
 
   document.getElementById("submitReview").addEventListener("click", ()=>{
-    const name=document.getElementById("reviewer").value || "Anonymous";
-    const text=document.getElementById("reviewText").value;
-    const rating=parseInt(document.getElementById("reviewRating").value);
+    const name = document.getElementById("reviewer").value || "Anonymous";
+    const text = document.getElementById("reviewText").value;
+    const rating = parseInt(document.getElementById("reviewRating").value);
     if(!reviews[pid]) reviews[pid]=[];
     reviews[pid].push({name,text,rating});
     localStorage.setItem("reviews",JSON.stringify(reviews));
@@ -248,41 +255,37 @@ function renderCheckout(){
     const p=products.find(prod=>prod.id===item.id);
     total+=p.price*item.qty;
     const div=document.createElement("div");
-    div.textContent=`${p.name} x${item.qty} - ₹${p.price*item.qty}`;
+    div.innerHTML=`${p.name} x${item.qty} - ₹${p.price*item.qty}`;
     checkoutContents.appendChild(div);
   });
   const totalDiv=document.createElement("div");
-  totalDiv.style.fontWeight="bold";
   totalDiv.style.marginTop="0.5rem";
-  totalDiv.textContent=`Total: ₹${total}`;
+  totalDiv.innerHTML=`<strong>Total: ₹${total}</strong>`;
   checkoutContents.appendChild(totalDiv);
 
-  const form=document.createElement("div");
+  const form = document.createElement("div");
   form.innerHTML=`
-    <h4>Enter Details:</h4>
-    <input id="custName" placeholder="Full Name" style="width:100%;margin-bottom:0.5rem"/>
-    <input id="custAddr" placeholder="Address" style="width:100%;margin-bottom:0.5rem"/>
-    <select id="paymentMethod" style="width:100%;margin-bottom:0.5rem">
+    <input id="custName" placeholder="Your Name" style="width:100%;margin:0.5rem 0"/>
+    <input id="custAddr" placeholder="Delivery Address" style="width:100%;margin:0.5rem 0"/>
+    <select id="paymentMethod" style="width:100%;margin:0.5rem 0">
       <option value="COD">Cash on Delivery</option>
-      <option value="UPI">UPI</option>
-      <option value="Card">Card</option>
+      <option value="Card">Credit/Debit Card</option>
     </select>
   `;
   checkoutContents.appendChild(form);
 }
 
-confirmOrder.addEventListener("click",()=>{
+confirmOrder.addEventListener("click", ()=>{
   const name=document.getElementById("custName").value;
   const addr=document.getElementById("custAddr").value;
-  const payment=document.getElementById("paymentMethod").value;
-  if(!name || !addr){ alert("Please fill details."); return; }
-  alert(`Thank you ${name}! Order placed.\nPayment: ${payment}`);
+  if(!name || !addr){ alert("Please enter name and address!"); return; }
+  alert(`Order confirmed!\nThank you ${name}.\nYour items will be delivered to: ${addr}`);
   cart=[];
   saveCart();
   checkoutModal.style.display="none";
 });
 
-// ---------- Init ----------
+// ---------- Initialize ----------
 renderProducts(products);
 updateCartUI();
 
