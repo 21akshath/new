@@ -53,9 +53,7 @@
         <h2 id="cartTitle">Your Cart</h2>
         <button id="closeCart" class="close-btn" aria-label="Close cart">✕</button>
       </header>
-      <div id="cartContents" class="cart-contents">
-        <!-- cart items injected by JS -->
-      </div>
+      <div id="cartContents" class="cart-contents"></div>
       <footer class="cart-footer">
         <div class="cart-summary">
           <div>Subtotal:</div>
@@ -66,6 +64,28 @@
           <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
         </div>
       </footer>
+    </div>
+  </div>
+
+  <!-- Product Details Modal -->
+  <div id="detailsModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="detailsTitle">
+      <header class="cart-header">
+        <h2 id="detailsTitle">Product Details</h2>
+        <button id="closeDetails" class="close-btn" aria-label="Close details">✕</button>
+      </header>
+      <div id="detailsContents" class="cart-contents"></div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="checkoutTitle">
+      <header class="cart-header">
+        <h2 id="checkoutTitle">Checkout</h2>
+        <button id="closeCheckout" class="close-btn" aria-label="Close checkout">✕</button>
+      </header>
+      <div id="checkoutContents" class="cart-contents"></div>
     </div>
   </div>
 
@@ -86,4 +106,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
