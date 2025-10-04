@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GreenCart — Product Showcase</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -13,7 +13,7 @@
       <p class="tag">Fresh picks. Eco-friendly shopping.</p>
     </div>
     <div class="controls">
-      <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
+      <input id="searchInput" type="search" placeholder="Search products..." />
       <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
     </div>
   </header>
@@ -27,72 +27,36 @@
     <section class="catalog">
       <div class="toolbar">
         <div id="activeCategory" class="active-category">All Products</div>
-        <div id="sortWrap" class="sort-wrap">
-          <label for="sortSelect">Sort:</label>
-          <select id="sortSelect">
-            <option value="default">Featured</option>
-            <option value="low">Price: Low → High</option>
-            <option value="high">Price: High → Low</option>
-            <option value="alpha">Name A → Z</option>
-          </select>
-        </div>
       </div>
-      <div id="productsGrid" class="products-grid" aria-live="polite"></div>
+      <div id="productsGrid" class="products-grid"></div>
     </section>
   </main>
 
   <!-- Cart Modal -->
   <div id="cartModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel" role="dialog" aria-labelledby="cartTitle">
+    <div class="cart-panel">
       <header class="cart-header">
-        <h2 id="cartTitle">Your Cart</h2>
-        <button id="closeCart" class="close-btn" aria-label="Close cart">✕</button>
+        <h2>Your Cart</h2>
+        <button id="closeCart" class="close-btn">✕</button>
       </header>
       <div id="cartContents" class="cart-contents"></div>
       <footer class="cart-footer">
-  <div class="cart-summary">
-    <div>Subtotal:</div>
-    <div id="cartSubtotal">₹0</div>
-  </div>
-  <div class="cart-actions">
-    <button id="clearCart" class="btn btn-outline">Clear</button>
-    <!-- CHECKOUT BUTTON -->
-    <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
-  </div>
-</footer>
-    </div>
-  </div>
-
-  <!-- Details Modal -->
-  <div id="detailsModal" class="cart-modal" aria-hidden="true">
-    <div class="cart-panel" role="dialog" aria-labelledby="detailsTitle">
-      <header class="cart-header">
-        <h2 id="detailsTitle">Product Details</h2>
-        <button id="closeDetails" class="close-btn" aria-label="Close">✕</button>
-      </header>
-      <div id="detailsContents" class="cart-contents"></div>
-    </div>
-  </div>
-
-  <template id="productCardTemplate">
-    <article class="product-card">
-      <img class="product-image" alt="Product image" />
-      <div class="card-body">
-        <h3 class="product-title"></h3>
-        <p class="product-category"></p>
-        <div class="price-row">
-          <div class="price">₹<span class="price-value"></span></div>
-          <button class="add-cart btn-small">Add to Cart</button>
-          <button class="view-details btn-small">View Details</button>
+        <div class="cart-summary">
+          <div>Subtotal:</div>
+          <div id="cartSubtotal">₹0</div>
         </div>
-        <div class="rating"></div>
-      </div>
-    </article>
-  </template>
+        <div class="cart-actions">
+          <button id="clearCart" class="btn btn-outline">Clear</button>
+          <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add to Cart Notification -->
+  <div id="cartNotification" class="cart-notification">Added to cart!</div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-
 
