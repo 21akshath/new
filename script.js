@@ -15,7 +15,7 @@ let products = [
   { id: 9, name: "Novel Book", price: 499, category: "Books", image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&auto=format&fit=crop&q=80" },
   { id: 10, name: "Notebook", price: 199, category: "Books", image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format&fit=crop&q=80" },
   { id: 11, name: "Gaming Mouse", price: 999, category: "Electronics", image: "https://images.unsplash.com/photo-1587202372775-98908d12596b?w=600&auto=format&fit=crop&q=80" },
-  { id: 12, name: "Bluetooth Speaker", price: 1799, category: "Electronics", image: "https://images.unsplash.com/photo-1612817159949-1ff7d3c0876f?w=600&auto=format&fit=crop&q=80" }
+  { id: 12, name: "Water Bottle", price: 399, category: "Lifestyle", image: "https://images.unsplash.com/photo-1526401485004-2fda9f4d1c84?w=600&auto=format&fit=crop&q=80" }
 ];
 
 // ===== Render Products =====
@@ -133,4 +133,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts(products);
   updateCartCount();
 });
+
 
