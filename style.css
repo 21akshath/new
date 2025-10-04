@@ -204,5 +204,19 @@ body{
   width: 100%;
   margin-bottom: 0.5rem;
 }
+.cart-notification {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: var(--green-500);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: none;
+  z-index: 1000;
+  font-weight: bold;
+}
+
 
 
