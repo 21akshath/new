@@ -2,16 +2,16 @@
 const products = [
   {id:1, name:"Cotton T-shirt", category:"Clothing", price:499, img:"https://source.unsplash.com/300x200/?tshirt", desc:"Comfortable cotton t-shirt."},
   {id:2, name:"Leather Wallet", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?wallet", desc:"Premium leather wallet."},
-  {id:3, name:"Smart Watch", category:"Electronics", price:3499, img:"https://source.unsplash.com/300x200/?smartwatch", desc:"Elegant smart watch."},
+  {id:3, name:"Bluetooth Headphones", category:"Electronics", price:2499, img:"https://source.unsplash.com/300x200/?headphones", desc:"High-quality sound."},
   {id:4, name:"Sports Shoes", category:"Footwear", price:1999, img:"https://source.unsplash.com/300x200/?shoes", desc:"Durable and comfortable."},
-  {id:5, name:"Backpack", category:"Accessories", price:1499, img:"https://source.unsplash.com/300x200/?backpack", desc:"Stylish backpack."},
+  {id:5, name:"Smart Watch", category:"Accessories", price:3499, img:"https://source.unsplash.com/300x200/?smartwatch", desc:"Elegant smart watch."},
   {id:6, name:"Cooking Pan", category:"Home & Kitchen", price:1599, img:"https://source.unsplash.com/300x200/?kitchen", desc:"Non-stick cooking pan."},
-  {id:7, name:"Novel Book", category:"Books", price:399, img:"https://source.unsplash.com/300x200/?book", desc:"Bestseller novel."},
-  {id:8, name:"Notebook", category:"Books", price:299, img:"https://source.unsplash.com/300x200/?notebook", desc:"High quality notebook."},
-  {id:9, name:"Yoga Mat", category:"Sports", price:799, img:"https://source.unsplash.com/300x200/?yoga", desc:"Eco-friendly yoga mat."},
-  {id:10, name:"Perfume", category:"Beauty", price:2299, img:"https://source.unsplash.com/300x200/?perfume", desc:"Fragrant perfume."},
-  {id:11, name:"Toy Car", category:"Toys", price:699, img:"https://source.unsplash.com/300x200/?toycar", desc:"Fun toy car."},
-  {id:12, name:"Sunglasses", category:"Accessories", price:1599, img:"https://source.unsplash.com/300x200/?sunglasses", desc:"Stylish sunglasses."}
+  {id:7, name:"Notebook", category:"Books", price:199, img:"https://source.unsplash.com/300x200/?notebook", desc:"College notebook."},
+  {id:8, name:"Yoga Mat", category:"Sports", price:799, img:"https://source.unsplash.com/300x200/?yoga", desc:"Eco-friendly yoga mat."},
+  {id:9, name:"Perfume", category:"Beauty", price:2299, img:"https://source.unsplash.com/300x200/?perfume", desc:"Fragrant perfume."},
+  {id:10, name:"Toy Car", category:"Toys", price:699, img:"https://source.unsplash.com/300x200/?toycar", desc:"Fun toy car."},
+  {id:11, name:"Jeans", category:"Clothing", price:999, img:"https://source.unsplash.com/300x200/?jeans", desc:"Stylish denim jeans."},
+  {id:12, name:"Backpack", category:"Accessories", price:1499, img:"https://source.unsplash.com/300x200/?backpack", desc:"Durable backpack."}
 ];
 
 const categories = ["All","Clothing","Accessories","Electronics","Footwear","Home & Kitchen","Books","Sports","Beauty","Toys"];
@@ -285,3 +285,4 @@ confirmOrder.addEventListener("click",()=>{
 // ---------- Init ----------
 renderProducts(products);
 updateCartUI();
+
