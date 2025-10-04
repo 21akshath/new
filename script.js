@@ -73,10 +73,6 @@ function renderProducts(list){
 
     card.querySelector(".view-details").addEventListener("click", ()=>openDetails(p.id));
 
-    const ratingDiv = card.querySelector(".rating");
-    const avg = getAverageRating(p.id);
-    ratingDiv.innerHTML = "⭐".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
-
     productsGrid.appendChild(card);
   });
 }
@@ -288,4 +284,5 @@ confirmOrder.addEventListener("click", ()=>{
 // ---------- Initialize ----------
 renderProducts(products);
 updateCartUI();
+
 
