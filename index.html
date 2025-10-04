@@ -1,40 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GreenCart — Product Showcase</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- Header -->
   <header class="site-header">
     <div class="brand">
       <h1>GreenCart</h1>
       <p class="tag">Fresh picks. Eco-friendly shopping.</p>
     </div>
     <div class="controls">
-      <input type="search" id="searchInput" placeholder="Search products...">
+      <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products" />
       <button id="cartBtn" class="cart-btn">Cart (<span id="cartCount">0</span>)</button>
     </div>
   </header>
 
-  <!-- Main layout -->
   <main class="main">
-    <!-- Sidebar -->
     <aside class="sidebar">
       <h2>Categories</h2>
       <ul id="categoryList" class="categories">
-        <!-- JS populates categories -->
+        <!-- populated by JS -->
       </ul>
     </aside>
 
-    <!-- Product catalog -->
     <section class="catalog">
       <div class="toolbar">
         <div id="activeCategory" class="active-category">All Products</div>
-        <div class="sort-wrap">
+        <div id="sortWrap" class="sort-wrap">
           <label for="sortSelect">Sort:</label>
           <select id="sortSelect">
             <option value="default">Featured</option>
@@ -44,8 +39,9 @@
           </select>
         </div>
       </div>
+
       <div id="productsGrid" class="products-grid" aria-live="polite">
-        <!-- JS populates product cards -->
+        <!-- product cards populated by JS -->
       </div>
     </section>
   </main>
@@ -55,9 +51,11 @@
     <div class="cart-panel" role="dialog" aria-labelledby="cartTitle">
       <header class="cart-header">
         <h2 id="cartTitle">Your Cart</h2>
-        <button id="closeCart" class="close-btn">✕</button>
+        <button id="closeCart" class="close-btn" aria-label="Close cart">✕</button>
       </header>
-      <div id="cartContents" class="cart-contents"></div>
+      <div id="cartContents" class="cart-contents">
+        <!-- cart items injected by JS -->
+      </div>
       <footer class="cart-footer">
         <div class="cart-summary">
           <div>Subtotal:</div>
@@ -71,28 +69,52 @@
     </div>
   </div>
 
-  <!-- Cart Notification -->
-  <div id="cartNotification">Added to cart!</div>
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="checkoutTitle">
+      <header class="cart-header">
+        <h2 id="checkoutTitle">Checkout</h2>
+        <button id="closeCheckout" class="close-btn" aria-label="Close checkout">✕</button>
+      </header>
+      <div id="checkoutContents" class="cart-contents">
+        <!-- Checkout items and form injected by JS -->
+      </div>
+      <footer class="cart-footer">
+        <button id="confirmOrder" class="btn btn-primary">Confirm Order</button>
+      </footer>
+    </div>
+  </div>
 
   <!-- Product Card Template -->
   <template id="productCardTemplate">
-  <article class="product-card">
-    <img class="product-image" alt="Product image" />
-    <div class="card-body">
-      <h3 class="product-title"></h3>
-      <p class="product-category"></p>
-      <div class="price-row">
-        <div class="price">₹<span class="price-value"></span></div>
-        <button class="add-cart btn-small">Add to Cart</button>
+    <article class="product-card">
+      <img class="product-image" alt="Product image" />
+      <div class="card-body">
+        <h3 class="product-title"></h3>
+        <p class="product-category"></p>
+        <div class="price-row">
+          <div class="price">₹<span class="price-value"></span></div>
+          <button class="add-cart btn-small">Add to Cart</button>
+          <button class="view-details btn-small">View Details</button>
+        </div>
+        <div class="rating"></div>
       </div>
-      <!-- Add the View Details button -->
-      <button class="view-details">View Details</button>
-    </div>
-  </article>
-</template>
+    </article>
+  </template>
 
+  <!-- Details Modal -->
+  <div id="detailsModal" class="cart-modal" aria-hidden="true">
+    <div class="cart-panel" role="dialog" aria-labelledby="detailsTitle">
+      <header class="cart-header">
+        <h2 id="detailsTitle">Product Details</h2>
+        <button id="closeDetails" class="close-btn" aria-label="Close details">✕</button>
+      </header>
+      <div id="detailsContents" class="cart-contents">
+        <!-- Details and reviews injected by JS -->
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
