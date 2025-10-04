@@ -1,4 +1,4 @@
-// ==================== PRODUCTS ====================
+// ---------- PRODUCTS ----------
 const products = [
   {id:1, name:"Cotton T-shirt", category:"Clothing", price:499, img:"https://source.unsplash.com/300x200/?tshirt", desc:"Comfortable cotton t-shirt."},
   {id:2, name:"Leather Wallet", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?wallet", desc:"Premium leather wallet."},
@@ -14,12 +14,12 @@ const products = [
   {id:12, name:"Sunglasses", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?sunglasses", desc:"Stylish UV-protected sunglasses."}
 ];
 
-const categories = ["All","Electronics","Fashion","Books","Lifestyle"];
+const categories = ["All","Clothing","Accessories","Electronics","Footwear","Home & Kitchen","Sports","Beauty","Toys"];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let reviews = JSON.parse(localStorage.getItem("reviews")) || {}; // productID: [{name,text,rating}]
+let reviews = JSON.parse(localStorage.getItem("reviews")) || {};
 
-// ==================== ELEMENTS ====================
+// ---------- ELEMENTS ----------
 const productsGrid = document.getElementById("productsGrid");
 const productCardTemplate = document.getElementById("productCardTemplate");
 const categoryList = document.getElementById("categoryList");
@@ -34,30 +34,24 @@ const clearCartBtn = document.getElementById("clearCart");
 const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
 
-// Details modal
 const detailsModal = document.getElementById("detailsModal");
 const closeDetails = document.getElementById("closeDetails");
 const detailsContents = document.getElementById("detailsContents");
 
-// Checkout modal
-const checkoutModal = document.getElementById("checkoutModal");
-const closeCheckout = document.getElementById("closeCheckout");
-const checkoutContents = document.getElementById("checkoutContents");
 const checkoutBtn = document.getElementById("checkoutBtn");
-const confirmOrder = document.getElementById("confirmOrder");
 
-// ==================== CATEGORY LIST ====================
+// ---------- CATEGORY LIST ----------
 categories.forEach(cat=>{
-  const li = document.createElement("li");
-  li.textContent = cat;
+  const li=document.createElement("li");
+  li.textContent=cat;
   li.addEventListener("click", ()=>filterCategory(cat));
   categoryList.appendChild(li);
 });
 
-// ==================== RENDER PRODUCTS ====================
+// ---------- RENDER PRODUCTS ----------
 function renderProducts(list){
-  productsGrid.innerHTML = "";
-  list.forEach(p => {
+  productsGrid.innerHTML="";
+  list.forEach(p=>{
     const card = productCardTemplate.content.cloneNode(true);
     card.querySelector(".product-title").textContent = p.name;
     card.querySelector(".product-category").textContent = p.category;
@@ -65,69 +59,71 @@ function renderProducts(list){
     const img = card.querySelector(".product-image");
     img.src = p.img;
     img.onerror = ()=>{ img.src="https://via.placeholder.com/300x200?text=No+Image"; };
-
-    // Add to Cart
     card.querySelector(".add-cart").addEventListener("click", ()=>addToCart(p.id));
+    card.querySelector(".view-details").addEventListener("click", ()=>openDetails(p.id));
 
-    // View Details
-    const viewBtn = document.createElement("button");
-    viewBtn.className="view-details btn-small";
-    viewBtn.textContent="View Details";
-    viewBtn.addEventListener("click", ()=>openDetails(p.id));
-    card.querySelector(".card-body").appendChild(viewBtn);
+    // Average rating
+    const ratingDiv = card.querySelector(".rating");
+    const avg = getAverageRating(p.id);
+    ratingDiv.innerHTML = "⭐".repeat(Math.round(avg)) + "☆".repeat(5-Math.round(avg));
 
     productsGrid.appendChild(card);
   });
 }
 
-// ==================== FILTER CATEGORY ====================
+// ---------- FILTER CATEGORY ----------
 function filterCategory(cat){
   activeCategory.textContent = cat==="All" ? "All Products" : cat;
   let list = cat==="All" ? products : products.filter(p=>p.category===cat);
   renderProducts(list);
 }
 
-// ==================== CART FUNCTIONS ====================
+// ---------- ADD TO CART ----------
 function addToCart(id){
-  let item = cart.find(i=>i.id===id);
-  if(item){ item.qty++; } else { cart.push({id, qty:1}); }
+  let item=cart.find(i=>i.id===id);
+  if(item){ item.qty++; }
+  else{ cart.push({id,qty:1}); }
   saveCart();
 }
 
 function saveCart(){
-  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("cart",JSON.stringify(cart));
   updateCartUI();
 }
 
 function updateCartUI(){
   cartCount.textContent = cart.reduce((a,c)=>a+c.qty,0);
-  cartContents.innerHTML = "";
-  let subtotal = 0;
+  cartContents.innerHTML="";
+  let subtotal=0;
   cart.forEach(item=>{
-    const p = products.find(prod=>prod.id===item.id);
-    subtotal += p.price*item.qty;
-    const div = document.createElement("div");
+    const p=products.find(prod=>prod.id===item.id);
+    subtotal+=p.price*item.qty;
+    const div=document.createElement("div");
     div.className="cart-item";
-    div.innerHTML = `<div><strong>${p.name}</strong> x${item.qty}</div><div>₹${p.price*item.qty}</div>`;
+    div.innerHTML=`<div><strong>${p.name}</strong> x${item.qty}</div><div>₹${p.price*item.qty}</div>`;
     cartContents.appendChild(div);
   });
-  cartSubtotal.textContent = `₹${subtotal}`;
+  cartSubtotal.textContent=`₹${subtotal}`;
 }
 
-clearCartBtn.addEventListener("click", ()=>{
+clearCartBtn.addEventListener("click",()=>{
   cart=[];
   saveCart();
 });
 
-// ==================== SEARCH & SORT ====================
-searchInput.addEventListener("input", ()=>{
-  const val = searchInput.value.toLowerCase();
-  const list = products.filter(p => p.name.toLowerCase().includes(val));
+cartBtn.addEventListener("click",()=>{ cartModal.style.display="flex"; cartModal.setAttribute("aria-hidden","false"); });
+closeCart.addEventListener("click",()=>{ cartModal.style.display="none"; cartModal.setAttribute("aria-hidden","true"); });
+
+// ---------- SEARCH ----------
+searchInput.addEventListener("input",()=>{
+  const val=searchInput.value.toLowerCase();
+  const list=products.filter(p=>p.name.toLowerCase().includes(val) || p.category.toLowerCase().includes(val));
   renderProducts(list);
 });
 
-sortSelect.addEventListener("change", ()=>{
-  let list = [...products];
+// ---------- SORT ----------
+sortSelect.addEventListener("change",()=>{
+  let list=[...products];
   switch(sortSelect.value){
     case "low": list.sort((a,b)=>a.price-b.price); break;
     case "high": list.sort((a,b)=>b.price-a.price); break;
@@ -136,21 +132,47 @@ sortSelect.addEventListener("change", ()=>{
   renderProducts(list);
 });
 
-// ==================== CART MODAL ====================
-cartBtn.addEventListener("click", ()=>{ cartModal.style.display="flex"; cartModal.setAttribute("aria-hidden","false"); });
-closeCart.addEventListener("click", ()=>{ cartModal.style.display="none"; cartModal.setAttribute("aria-hidden","true"); });
+// ---------- REVIEWS ----------
+function getAverageRating(pid){
+  if(!reviews[pid] || reviews[pid].length===0) return 0;
+  const sum = reviews[pid].reduce((a,c)=>a+c.rating,0);
+  return sum/reviews[pid].length;
+}
 
-// ==================== DETAILS MODAL ====================
+function renderReviewList(pid){
+  const reviewList=document.getElementById("reviewList");
+  reviewList.innerHTML="";
+  if(!reviews[pid] || reviews[pid].length===0){ reviewList.textContent="No reviews yet."; return; }
+  reviews[pid].forEach((r,idx)=>{
+    const div=document.createElement("div");
+    div.style.borderBottom="1px solid #ddd";
+    div.style.padding="0.3rem 0";
+    div.innerHTML=`<strong>${r.name}</strong> ${"⭐".repeat(r.rating)}<br>${r.text}
+      <button class="deleteReview" data-index="${idx}" style="margin-left:10px;color:red">Delete</button>`;
+    reviewList.appendChild(div);
+  });
+  reviewList.querySelectorAll(".deleteReview").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      reviews[pid].splice(btn.dataset.index,1);
+      localStorage.setItem("reviews",JSON.stringify(reviews));
+      renderReviewList(pid);
+      renderProducts(products);
+    });
+  });
+}
+
+// ---------- VIEW DETAILS ----------
 function openDetails(pid){
-  const p = products.find(x=>x.id===pid);
+  const p=products.find(x=>x.id===pid);
   detailsContents.innerHTML="";
-  const div = document.createElement("div");
-  div.innerHTML = `
-    <img src="${p.img}" style="width:100%;height:auto;margin-bottom:10px"/>
+  const div=document.createElement("div");
+  div.innerHTML=`
+    <img src="${p.img}" style="width:100%;height:auto"/>
     <h3>${p.name}</h3>
     <p><strong>Category:</strong> ${p.category}</p>
     <p><strong>Price:</strong> ₹${p.price}</p>
     <p>${p.desc}</p>
+    <div id="detailsRating">⭐${"⭐".repeat(Math.round(getAverageRating(p.id)))}☆${"☆".repeat(5-Math.round(getAverageRating(p.id)))}</div>
     <h4>Reviews:</h4>
     <div id="reviewList"></div>
     <h4>Add Review:</h4>
@@ -171,19 +193,19 @@ function openDetails(pid){
   renderReviewList(pid);
 
   document.getElementById("submitReview").addEventListener("click", ()=>{
-    const name = document.getElementById("reviewer").value || "Anonymous";
-    const text = document.getElementById("reviewText").value;
-    const rating = parseInt(document.getElementById("reviewRating").value);
-    if(!reviews[pid]) reviews[pid] = [];
+    const name=document.getElementById("reviewer").value || "Anonymous";
+    const text=document.getElementById("reviewText").value;
+    const rating=parseInt(document.getElementById("reviewRating").value);
+    if(!reviews[pid]) reviews[pid]=[];
     reviews[pid].push({name,text,rating});
-    localStorage.setItem("reviews", JSON.stringify(reviews));
+    localStorage.setItem("reviews",JSON.stringify(reviews));
     renderReviewList(pid);
-    document.getElementById("reviewText").value = "";
-    document.getElementById("reviewer").value = "";
+    document.getElementById("reviewText").value="";
+    document.getElementById("reviewer").value="";
     renderProducts(products);
   });
 
-  document.getElementById("addCartDetail").addEventListener("click", ()=>{
+  document.getElementById("addCartDetail").addEventListener("click",()=>{
     addToCart(pid);
     detailsModal.style.display="none";
   });
@@ -192,95 +214,11 @@ function openDetails(pid){
   detailsModal.setAttribute("aria-hidden","false");
 }
 
-closeDetails.addEventListener("click", ()=>{
+closeDetails.addEventListener("click",()=>{
   detailsModal.style.display="none";
   detailsModal.setAttribute("aria-hidden","true");
 });
 
-// ==================== RENDER REVIEW LIST ====================
-function renderReviewList(pid){
-  const reviewList = document.getElementById("reviewList");
-  reviewList.innerHTML = "";
-  if(!reviews[pid] || reviews[pid].length===0){
-    reviewList.textContent = "No reviews yet.";
-    return;
-  }
-  reviews[pid].forEach((r,idx)=>{
-    const div = document.createElement("div");
-    div.style.borderBottom="1px solid #ddd";
-    div.style.padding="0.3rem 0";
-    div.innerHTML = `
-      <strong>${r.name}</strong> ${"⭐".repeat(r.rating)}<br>${r.text}
-      <button class="deleteReview" data-index="${idx}" style="margin-left:10px;color:red">Delete</button>
-    `;
-    reviewList.appendChild(div);
-  });
-
-  reviewList.querySelectorAll(".deleteReview").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      reviews[pid].splice(btn.dataset.index,1);
-      localStorage.setItem("reviews",JSON.stringify(reviews));
-      renderReviewList(pid);
-      renderProducts(products);
-    });
-  });
-}
-
-// ==================== CHECKOUT ====================
-checkoutBtn.addEventListener("click", ()=>{
-  if(cart.length===0){ alert("Cart is empty!"); return; }
-  renderCheckout();
-  checkoutModal.style.display="flex";
-  checkoutModal.setAttribute("aria-hidden","false");
-});
-closeCheckout.addEventListener("click", ()=>{
-  checkoutModal.style.display="none";
-  checkoutModal.setAttribute("aria-hidden","true");
-});
-
-function renderCheckout(){
-  checkoutContents.innerHTML = "";
-  let total = 0;
-  cart.forEach(item=>{
-    const p = products.find(prod=>prod.id===item.id);
-    total += p.price*item.qty;
-    const div = document.createElement("div");
-    div.textContent = `${p.name} x${item.qty} - ₹${p.price*item.qty}`;
-    checkoutContents.appendChild(div);
-  });
-  const totalDiv = document.createElement("div");
-  totalDiv.style.fontWeight="bold";
-  totalDiv.style.marginTop="0.5rem";
-  totalDiv.textContent = `Total: ₹${total}`;
-  checkoutContents.appendChild(totalDiv);
-
-  const form = document.createElement("div");
-  form.innerHTML = `
-    <h4>Enter Details:</h4>
-    <input id="custName" placeholder="Full Name" style="width:100%;margin-bottom:0.5rem"/>
-    <input id="custAddr" placeholder="Address" style="width:100%;margin-bottom:0.5rem"/>
-    <select id="paymentMethod" style="width:100%;margin-bottom:0.5rem">
-      <option value="COD">Cash on Delivery</option>
-      <option value="UPI">UPI</option>
-      <option value="Card">Card</option>
-    </select>
-    <button id="confirmOrder" class="btn btn-primary" style="margin-top:0.5rem">Confirm Order</button>
-  `;
-  checkoutContents.appendChild(form);
-
-  document.getElementById("confirmOrder").addEventListener("click", ()=>{
-    const name = document.getElementById("custName").value;
-    const addr = document.getElementById("custAddr").value;
-    const payment = document.getElementById("paymentMethod").value;
-    if(!name || !addr){ alert("Please fill details."); return; }
-    alert(`Thank you ${name}! Order placed.\nPayment: ${payment}`);
-    cart=[];
-    saveCart();
-    checkoutModal.style.display="none";
-  });
-}
-
-// ==================== INIT ====================
+// ---------- INIT ----------
 renderProducts(products);
 updateCartUI();
-
