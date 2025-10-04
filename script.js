@@ -1,17 +1,17 @@
 // ==================== PRODUCTS ====================
 const products = [
-  { id: 1, name: "Smart Watch", price: 2999, category: "Electronics", img: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=600&auto=format&fit=crop&q=80", desc:"Smart watch with multiple features." },
-  { id: 2, name: "Headphones", price: 1999, category: "Electronics", img: "https://images.unsplash.com/photo-1518449037760-5f1be8d1e4b7?w=600&auto=format&fit=crop&q=80", desc:"High-quality wireless headphones." },
-  { id: 3, name: "Running Shoes", price: 2499, category: "Fashion", img: "https://images.unsplash.com/photo-1528701800489-20be9c1e4a52?w=600&auto=format&fit=crop&q=80", desc:"Comfortable running shoes." },
-  { id: 4, name: "Backpack", price: 1499, category: "Fashion", img: "https://images.unsplash.com/photo-1504280390368-3971edcda2a3?w=600&auto=format&fit=crop&q=80", desc:"Stylish backpack for everyday use." },
-  { id: 5, name: "Sunglasses", price: 799, category: "Fashion", img: "https://images.unsplash.com/photo-1518544889289-9278fdf4b511?w=600&auto=format&fit=crop&q=80", desc:"Trendy sunglasses." },
-  { id: 6, name: "Cotton T-Shirt", price: 1199, category: "Fashion", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&auto=format&fit=crop&q=80", desc:"Comfortable cotton t-shirt." },
-  { id: 7, name: "Jeans", price: 1599, category: "Fashion", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80", desc:"Classic blue jeans." },
-  { id: 8, name: "Leather Wallet", price: 899, category: "Fashion", img: "https://images.unsplash.com/photo-1606813902910-9b54e6dbd7d4?w=600&auto=format&fit=crop&q=80", desc:"Premium leather wallet." },
-  { id: 9, name: "Novel Book", price: 499, category: "Books", img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&auto=format&fit=crop&q=80", desc:"Bestselling novel book." },
-  { id: 10, name: "Notebook", price: 199, category: "Books", img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&auto=format&fit=crop&q=80", desc:"Notebook for daily notes." },
-  { id: 11, name: "Gaming Mouse", price: 999, category: "Electronics", img: "https://images.unsplash.com/photo-1587202372775-98908d12596b?w=600&auto=format&fit=crop&q=80", desc:"High precision gaming mouse." },
-  { id: 12, name: "Water Bottle", price: 399, category: "Lifestyle", img: "https://images.unsplash.com/photo-1526401485004-2fda9f4d1c84?w=600&auto=format&fit=crop&q=80", desc:"Eco-friendly water bottle." }
+  {id:1, name:"Cotton T-shirt", category:"Clothing", price:499, img:"https://source.unsplash.com/300x200/?tshirt", desc:"Comfortable cotton t-shirt."},
+  {id:2, name:"Leather Wallet", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?wallet", desc:"Premium leather wallet."},
+  {id:3, name:"Smart Watch", category:"Electronics", price:2499, img:"https://source.unsplash.com/300x200/?smartwatch", desc:"Stylish and functional smart watch."},
+  {id:4, name:"Sports Shoes", category:"Footwear", price:1999, img:"https://source.unsplash.com/300x200/?shoes", desc:"Durable and comfortable."},
+  {id:5, name:"Wireless Earbuds", category:"Electronics", price:1799, img:"https://source.unsplash.com/300x200/?earbuds", desc:"High-quality wireless earbuds."},
+  {id:6, name:"Cooking Pan", category:"Home & Kitchen", price:1599, img:"https://source.unsplash.com/300x200/?kitchen", desc:"Non-stick cooking pan."},
+  {id:7, name:"Travel Backpack", category:"Accessories", price:1499, img:"https://source.unsplash.com/300x200/?backpack", desc:"Spacious and durable backpack."},
+  {id:8, name:"Yoga Mat", category:"Sports", price:799, img:"https://source.unsplash.com/300x200/?yoga", desc:"Eco-friendly yoga mat."},
+  {id:9, name:"Perfume", category:"Beauty", price:2299, img:"https://source.unsplash.com/300x200/?perfume", desc:"Fragrant perfume."},
+  {id:10, name:"Toy Car", category:"Toys", price:699, img:"https://source.unsplash.com/300x200/?toycar", desc:"Fun toy car."},
+  {id:11, name:"Jeans", category:"Clothing", price:999, img:"https://source.unsplash.com/300x200/?jeans", desc:"Comfortable denim jeans."},
+  {id:12, name:"Sunglasses", category:"Accessories", price:1299, img:"https://source.unsplash.com/300x200/?sunglasses", desc:"Stylish UV-protected sunglasses."}
 ];
 
 const categories = ["All","Electronics","Fashion","Books","Lifestyle"];
@@ -283,3 +283,4 @@ function renderCheckout(){
 // ==================== INIT ====================
 renderProducts(products);
 updateCartUI();
+
