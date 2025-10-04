@@ -78,11 +78,23 @@ function filterCategory(cat){
 
 // ---------- ADD TO CART ----------
 function addToCart(id){
-  let item=cart.find(i=>i.id===id);
-  if(item){ item.qty++; }
-  else{ cart.push({id,qty:1}); }
+  let item = cart.find(i => i.id === id);
+  if(item){ 
+    item.qty++; 
+  } else { 
+    cart.push({id, qty:1}); 
+  }
   saveCart();
+
+  // Show notification
+  const notif = document.getElementById("cartNotification");
+  notif.style.display = "block";
+  notif.textContent = "Added to cart!";
+  setTimeout(() => { notif.style.display = "none"; }, 1500);
 }
+
+
+
 
 function saveCart(){
   localStorage.setItem("cart",JSON.stringify(cart));
@@ -243,5 +255,6 @@ closeDetails.addEventListener("click",()=>{
 // ---------- INIT ----------
 renderProducts(products);
 updateCartUI();
+
 
 
