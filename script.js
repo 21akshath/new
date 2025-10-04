@@ -103,7 +103,30 @@ function updateCartUI(){
   });
   cartSubtotal.textContent=`₹${subtotal}`;
 }
+// ---------- CHECKOUT ----------
+const checkoutBtn = document.getElementById("checkoutBtn");
 
+checkoutBtn.addEventListener("click", () => {
+  if(cart.length === 0){
+    alert("Your cart is empty!");
+    return;
+  }
+
+  let total = 0;
+  let summary = "Order Summary:\n";
+  cart.forEach(item => {
+    const p = products.find(prod => prod.id === item.id);
+    total += p.price * item.qty;
+    summary += `${p.name} x${item.qty} - ₹${p.price*item.qty}\n`;
+  });
+  summary += `Total: ₹${total}\n\nThank you for shopping with GreenCart!`;
+
+  alert(summary);
+
+  // Clear cart after checkout
+  cart = [];
+  saveCart();
+});
 clearCartBtn.addEventListener("click",()=>{
   cart=[];
   saveCart();
@@ -220,4 +243,5 @@ closeDetails.addEventListener("click",()=>{
 // ---------- INIT ----------
 renderProducts(products);
 updateCartUI();
+
 
